@@ -1,26 +1,25 @@
+# Імпортуємо бібліотеки
 import asyncio
 from aiogram import Bot, Dispatcher
-from aiogram.filters import CommandStart
 from aiogram.types import Message
+from aiogram.filters import CommandStart
 
-TOKEN = "8793200469:AAG8Svf8DHBOYqjxnuD0jml1XqAq-ghDTlI"
+# Сюди вставляємо свій токен з BotFather
+API_TOKEN = "8793200469:AAGArM3LEWWe6h1Eu50mjmZP-yeG0uZW4-4"
 
-bot = Bot(token=TOKEN)
+# Створюємо бота і диспетчер
+bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
 
-
+# Обробник команди /start
 @dp.message(CommandStart())
-async def start(message: Message):
-    await message.answer("Я працюю 🤖")
+async def start_handler(message: Message):
+    await message.answer("Привіт! Я твій перший бот!")
 
-
+# Головна функція для запуску бота
 async def main():
-    print("Бот запущений...")
-
-    await bot.delete_webhook(drop_pending_updates=True)
-
     await dp.start_polling(bot)
 
-
+# Запускаємо
 if __name__ == "__main__":
     asyncio.run(main())
