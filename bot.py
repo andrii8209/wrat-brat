@@ -33,7 +33,7 @@ def main_keyboard():
 @dp.message(CommandStart())
 async def start_handler(message: Message):
     await message.answer(
-        "Я бот який повторює",
+        "Я бот Андрія Вашкевича, який повторює повідомлення 🤖",
         reply_markup=main_keyboard()
     )
 
@@ -42,11 +42,21 @@ async def start_handler(message: Message):
 @dp.message(Command("help"))
 async def help_handler(message: Message):
     await message.answer(
-        "Я бот який повторює твої повідомлення.\n\n"
-        "Кнопки:\n"
-        "🕒 Година — показує час по Києву\n"
-        "🤓 Цікавий факт — випадковий факт",
+        "🤖 Я бот Андрія Вашкевича.\n\n"
+        "Я можу:\n"
+        "🕒 Показувати час по Києву\n"
+        "🤓 Розказувати цікавий факт\n"
+        "📝 Повторювати твої повідомлення",
         reply_markup=main_keyboard()
+    )
+
+
+# Привітання
+@dp.message(lambda message: message.text.lower() == "привіт")
+async def hello_handler(message: Message):
+    await message.answer(
+        "Привіт! 👋\n"
+        "Я бот Андрія Вашкевича 🤖"
     )
 
 
