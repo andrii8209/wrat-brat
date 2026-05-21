@@ -7,7 +7,7 @@ from aiogram.filters import CommandStart, Command
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
 # Токен бота
-API_TOKEN = "ТУТ_СВІЙ_ТОКЕН"
+API_TOKEN = "8746185237:AAHu0oguurkr_oK6_dM_Ge7KLJL3wKcvnf8"
 
 # Створюємо бота
 bot = Bot(token=API_TOKEN)
