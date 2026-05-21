@@ -1,5 +1,6 @@
 import asyncio
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 from aiogram import Bot, Dispatcher
 from aiogram.types import Message
@@ -14,7 +15,7 @@ bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
 
 
-# Клавіатура з кнопками
+# Клавіатура
 def main_keyboard():
     builder = ReplyKeyboardBuilder()
 
@@ -25,12 +26,10 @@ def main_keyboard():
 
     builder.adjust(2)
 
-    return builder.as_markup(
-        resize_keyboard=True
-    )
+    return builder.as_markup(resize_keyboard=True)
 
 
-# Команда /start
+# /start
 @dp.message(CommandStart())
 async def start_handler(message: Message):
     await message.answer(
@@ -39,39 +38,38 @@ async def start_handler(message: Message):
     )
 
 
-# Команда /help
+# /help
 @dp.message(Command("help"))
 async def help_handler(message: Message):
     await message.answer(
         "Я бот який повторює твої повідомлення.\n\n"
         "Кнопки:\n"
-        "🕒 Година — показує час\n"
+        "🕒 Година — показує час по Києву\n"
         "🤓 Цікавий факт — випадковий факт",
         reply_markup=main_keyboard()
     )
 
 
-# Кнопка "Година"
+# Година по Києву
 @dp.message(lambda message: message.text == "🕒 Година")
 async def time_handler(message: Message):
-    current_time = datetime.now().strftime("%H:%M:%S")
+    kyiv_time = datetime.now(ZoneInfo("Europe/Kyiv"))
+    current_time = kyiv_time.strftime("%H:%M:%S")
 
     await message.answer(
-        f"Зараз година: {current_time}"
+        f"🕒 Зараз у Києві: {current_time}"
     )
 
 
-# Кнопка "Цікавий факт"
+# Цікавий факт
 @dp.message(lambda message: message.text == "🤓 Цікавий факт")
 async def fact_handler(message: Message):
-    fact = (
-        "Восьминіг має 3 серця 🐙"
+    await message.answer(
+        "🐙 Восьминіг має 3 серця!"
     )
 
-    await message.answer(fact)
 
-
-# Повторює всі повідомлення
+# Повторення повідомлень
 @dp.message()
 async def repeat_handler(message: Message):
     await message.answer(message.text)
